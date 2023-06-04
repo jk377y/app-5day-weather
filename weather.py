@@ -222,122 +222,80 @@
 
 
 
-
 import customtkinter as ctk
-import requests
-import json
-from datetime import datetime
 
-def WeatherApp():
-    def kelvin_to_fahrenheit(kelvin_temp):
-        return round((kelvin_temp - 273.15) * 9/5 + 32, 2)
+#! Window
+# ===================================================================
+window = ctk.CTk()
+window.geometry("900x900")
+window.title("5-Day Weather Forecast")
+ctk.set_appearance_mode("dark")
+window.grid_columnconfigure(0, weight=1)
+window.iconbitmap("images/icons/sun.ico")
+# ===================================================================
 
-    def mps_to_mph(mps_speed):
-        return round(mps_speed * 2.237, 2)
 
-    window = ctk.CTk()
-    window.title("5-Day Weather Forecast")
-    window.geometry("600x600")
-    window.grid_columnconfigure(0, weight=1)
-    window.iconbitmap("images/icons/sun.ico")
 
-    label = ctk.CTkLabel(window, text="Enter the name of a city:", font=("Arial", 14))
-    label.grid(row=0, column=0, pady=5)
+#! Title Frame
+# ===================================================================
+title_frame = ctk.CTkFrame(window, fg_color="transparent")
+title_frame.grid(row=0, column=0, pady=10)
+title_label = ctk.CTkLabel(title_frame, text="5-Day Weather Forecast", font=("Arial", 32), text_color="#00a2ff")
+title_label.grid(row=0, column=0, pady=15)
+# ===================================================================
 
-    city_entry = ctk.CTkEntry(window)
-    city_entry.grid(row=1, column=0, pady=5)
 
-    error_label = ctk.CTkLabel(window, text="", text_color="red", font=("Arial", 12))
-    error_label.grid(row=2, column=0, pady=5)
 
-    current_weather_label = ctk.CTkLabel(window, text="", font=("Arial", 14), fg_color="green", corner_radius=20)
-    current_weather_label.grid(row=0, column=1, rowspan=3, pady=5, padx=10)
-    current_weather_label.grid_remove()
+#! Top Frame
+# ===================================================================
+top_frame = ctk.CTkFrame(window, fg_color="#18ff3e") #! Green
+top_frame.grid(row=1, column=0, pady=10)
+top_left_frame = ctk.CTkFrame(top_frame, fg_color="#eb4b0c") #! Orange
+top_left_frame.grid(row=0, column=0, pady=10, padx=10, sticky="ew")
+top_right_frame = ctk.CTkFrame(top_frame, fg_color="#79ffcc") #! Light Green
+top_right_frame.grid(row=0, column=1, pady=10, padx=10, sticky="ew")
+# ===================================================================
 
-    forecast_frame = ctk.CTkFrame(window)
-    forecast_frame.grid(row=3, column=0, columnspan=2, pady=5)
 
-    result_labels = []
 
-    def destroy():
-        pass
+#! Middle Frame
+# ===================================================================
+middle_frame = ctk.CTkFrame(window, fg_color="#0c87eb") #! Blue
+middle_frame.grid(row=2, column=0, pady=10)
+fetch_button = ctk.CTkButton(middle_frame, text="Get Weather", font=("Arial", 16), text_color="white", fg_color="#eb4b0c", corner_radius=15)
+fetch_button.grid(row=0, column=0, pady=10, padx=10)
+reset_button = ctk.CTkButton(middle_frame, text="Reset", font=("Arial", 16), text_color="white", fg_color="#eb4b0c", corner_radius=15)
+reset_button.grid(row=1, column=0, pady=10, padx=10)
+# ===================================================================
 
-    def show_error(message):
-        pass
 
-    def display_current_weather(current):
-        timestamp = datetime.fromtimestamp(current['dt'])
-        formatted_date = timestamp.strftime("%m-%d-%Y")
-        city = city_entry.get().upper()
-        current_weather_label.configure(
-            text=f"{city}\n"
-            f"\nDate: {formatted_date}\n\n"
-            f"Main Weather: {current['weather'][0]['main']}\n"
-            f"Description: {current['weather'][0]['description']}\n"
-            f"Temperature: {kelvin_to_fahrenheit(current['main']['temp'])} °F\n"
-            f"Humidity: {current['main']['humidity']}%\n"
-            f"Wind Speed: {mps_to_mph(current['wind']['speed'])} MPH\n",
-            padx=10,
-            pady=10,
-        )
-        current_weather_label.grid(row=0, column=1, pady=5, padx=20)
 
-    def display_forecast_weather(self, future):
-        for label in forecast_frame.grid_slaves():
-            label.grid_remove()
+#! Bottom Frame
+# ===================================================================
+bottom_frame = ctk.CTkFrame(window, fg_color="#83018f") #! Purple
+bottom_frame.grid(row=3, column=0, pady=10)
+future_forecast_label_1 = ctk.CTkLabel(bottom_frame, text="forecast 1", font=("Arial", 16), text_color="#00a2ff")
+future_forecast_label_1.grid(row=0, column=0, pady=50, padx=50)
+future_forecast_label_2 = ctk.CTkLabel(bottom_frame, text="forecast 2", font=("Arial", 16), text_color="#00a2ff")
+future_forecast_label_2.grid(row=0, column=1, pady=50, padx=50)
+future_forecast_label_3 = ctk.CTkLabel(bottom_frame, text="forecast 3", font=("Arial", 16), text_color="#00a2ff")
+future_forecast_label_3.grid(row=0, column=2, pady=50, padx=50)
+future_forecast_label_4 = ctk.CTkLabel(bottom_frame, text="forecast 4", font=("Arial", 16), text_color="#00a2ff")
+future_forecast_label_4.grid(row=0, column=3, pady=50, padx=50)
+future_forecast_label_5 = ctk.CTkLabel(bottom_frame, text="forecast 5", font=("Arial", 16), text_color="#00a2ff")
+future_forecast_label_5.grid(row=0, column=4, pady=50, padx=50)
+# ===================================================================
 
-        for i, forecast in enumerate(future):
-            formatted_date = datetime.fromtimestamp(forecast['dt']).strftime("%m-%d-%Y")
-            forecast_label = ctk.CTkLabel(
-                forecast_frame,
-                text=f"\nDate: {formatted_date}\n"
-                f"Main Weather: {forecast['weather'][0]['main']}\n"
-                f"Description: {forecast['weather'][0]['description']}\n"
-                f"Temperature: {kelvin_to_fahrenheit(forecast['main']['temp'])} °F\n"
-                f"Humidity: {forecast['main']['humidity']}%\n"
-                f"Wind Speed: {mps_to_mph(forecast['wind']['speed'])} MPH\n",
-                font=("Arial", 14),
-                padx=10,
-                pady=10,
-            )
-            forecast_label.grid(row=0, column=0, pady=5, padx=10)
 
-    def get_weather(self, event=None):
-        city = self.city_entry.get()
 
-        api_key = "d01afd2806e508d282da4f840dd4696a"
-        base_url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}"
+#! Conversion Functions
+# ===================================================================
+def kelvin_to_fahrenheit(kelvin_temp):
+    return round((kelvin_temp - 273.15) * 9/5 + 32, 2)
+def mps_to_mph(mps_speed):
+    return round(mps_speed * 2.237, 2)
+# ===================================================================
 
-        response = requests.get(base_url)
-        data = json.loads(response.text)
-        if city_entry.get() == "":
-            show_error("Please enter a city name.")
-        elif data["cod"] == "404":
-            error_message = f"Weather information not found for '{city}'.\nPlease try again."
-            show_error(error_message)
-            result_label = ctk.CTkLabel(forecast_frame, text="", font=("Arial", 14))
-            result_label.grid(row=0, column=0, pady=5, padx=20)
-        else:
-            current = data["list"][0]
-            future = []
 
-            for i in range(7, len(data["list"]), 8):
-                future.append(data["list"][i])
 
-            display_current_weather(current)
-            display_forecast_weather(future)
-            current_weather_label.grid()
-
-    def create_buttons_frame(self, window):
-        buttons_frame = ctk.CTkFrame(window)
-        buttons_frame.grid(row=2, column=0, pady=10)
-
-        button = ctk.CTkButton(window, text="Get Weather", command=self.get_weather)
-        button.grid(in_=buttons_frame, row=0, pady=5)
-
-        self.city_entry.bind("<Return>", self.get_weather)
-
-        button = ctk.CTkButton(window, text="Reset", command=self.destroy)
-        button.grid(in_=buttons_frame, row=1, pady=5)
-
-WeatherApp()
+window.mainloop()
