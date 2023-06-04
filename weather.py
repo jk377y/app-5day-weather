@@ -227,46 +227,48 @@ import requests # used to make API requests
 import json # used to parse JSON data from API responses
 from datetime import datetime # used to convert UNIX timestamps to datetime objects
 
+
+
 #! Window
 # ===================================================================
-# window = ctk.CTk()
-# window.geometry("900x900")
-# window.title("5-Day Weather Forecast")
-# ctk.set_appearance_mode("dark")
-# window.grid_columnconfigure(0, weight=1)
-# window.iconbitmap("images/icons/sun.ico")
+window = ctk.CTk()
+window.geometry("900x900")
+window.title("5-Day Weather Forecast")
+ctk.set_appearance_mode("dark")
+window.grid_columnconfigure(0, weight=1)
+window.iconbitmap("images/icons/sun.ico")
 # ===================================================================
 
 
 
 #! Title Frame
 # ===================================================================
-# title_frame = ctk.CTkFrame(window, fg_color="transparent")
-# title_frame.grid(row=0, column=0, pady=10)
-# title_label = ctk.CTkLabel(title_frame, text="5-Day Weather Forecast", font=("Arial", 32), text_color="#00a2ff")
-# title_label.grid(row=0, column=0, pady=15)
+title_frame = ctk.CTkFrame(window, fg_color="transparent")
+title_frame.grid(row=0, column=0, pady=10)
+title_label = ctk.CTkLabel(title_frame, text="5-Day Weather Forecast", font=("Arial", 32), text_color="#00a2ff")
+title_label.grid(row=0, column=0, pady=15)
 # ===================================================================
 
 
 
 #! Top Frame
 # ===================================================================
-# top_frame = ctk.CTkFrame(window, fg_color="#18ff3e") #! Green
-# top_frame.grid(row=1, column=0, pady=10)
+top_frame = ctk.CTkFrame(window, fg_color="#18ff3e") #! Green
+top_frame.grid(row=1, column=0, pady=10)
 
-# top_left_frame = ctk.CTkFrame(top_frame, fg_color="#eb4b0c") #! Orange
-# top_left_frame.grid(row=0, column=0, pady=10, padx=10, sticky="ew")
-# instruction_label = ctk.CTkLabel(top_left_frame, text="Enter a city:", font=("Arial", 16), text_color="white")
-# instruction_label.grid(row=0, column=0, pady=10, padx=10)
-# city_entry = ctk.CTkEntry(top_left_frame, font=("Arial", 16), fg_color="#eb4b0c", corner_radius=10)
-# city_entry.grid(row=1, column=0, pady=10, padx=10)
+top_left_frame = ctk.CTkFrame(top_frame, fg_color="#eb4b0c") #! Orange
+top_left_frame.grid(row=0, column=0, pady=10, padx=10, sticky="ew")
+instruction_label = ctk.CTkLabel(top_left_frame, text="Enter a city:", font=("Arial", 16), text_color="white")
+instruction_label.grid(row=0, column=0, pady=10, padx=10)
+city_entry = ctk.CTkEntry(top_left_frame, font=("Arial", 16), fg_color="#eb4b0c", corner_radius=10)
+city_entry.grid(row=1, column=0, pady=10, padx=10)
 
-# top_right_frame = ctk.CTkFrame(top_frame, fg_color="#5a5643") #! Light Green
-# top_right_frame.grid(row=0, column=1, pady=10, padx=10, sticky="ew")
-# current_label = ctk.CTkLabel(top_right_frame, text="CITY NAME", font=("Arial", 16), text_color="white")
-# current_label.grid(row=0, column=0, pady=10, padx=10)
-# current_city_label = ctk.CTkLabel(top_right_frame, text="City name goes here", font=("Arial", 16), text_color="white")
-# current_city_label.grid(row=0, column=0, pady=10, padx=10)
+top_right_frame = ctk.CTkFrame(top_frame, fg_color="#5a5643") #! Light Green
+top_right_frame.grid(row=0, column=1, pady=10, padx=10, sticky="ew")
+current_label = ctk.CTkLabel(top_right_frame, text="CITY NAME", font=("Arial", 16), text_color="white")
+current_label.grid(row=0, column=0, pady=10, padx=10)
+current_city_label = ctk.CTkLabel(top_right_frame, text="City name goes here", font=("Arial", 16), text_color="white")
+current_city_label.grid(row=0, column=0, pady=10, padx=10)
 # current_date_label = ctk.CTkLabel(top_right_frame, text="Date goes here", font=("Arial", 16), text_color="white")
 # current_date_label.grid(row=1, column=0, padx=10)
 # current_description_label = ctk.CTkLabel(top_right_frame, text='description', font=("Arial", 16), text_color="white")
@@ -281,24 +283,16 @@ from datetime import datetime # used to convert UNIX timestamps to datetime obje
 
 
 
-#! Middle Frame
-# ===================================================================
-# middle_frame = ctk.CTkFrame(window, fg_color="#0c87eb") #! Blue
-# middle_frame.grid(row=2, column=0, pady=10)
-# fetch_button = ctk.CTkButton(middle_frame, text="Get Weather", font=("Arial", 16), text_color="white", fg_color="#eb4b0c", corner_radius=15, command=get_weather)
-# fetch_button.grid(row=0, column=0, pady=10, padx=10)
-# reset_button = ctk.CTkButton(middle_frame, text="Reset", font=("Arial", 16), text_color="white", fg_color="#eb4b0c", corner_radius=15)
-# reset_button.grid(row=1, column=0, pady=10, padx=10)
-# ===================================================================
+
 
 
 
 #! Bottom Frame
 # ===================================================================
-# bottom_frame = ctk.CTkFrame(window, fg_color="#83018f") #! Purple
-# bottom_frame.grid(row=3, column=0, pady=10)
-# future_forecast_label = ctk.CTkLabel(bottom_frame, text="forecast", font=("Arial", 16), text_color="#00a2ff")
-# future_forecast_label.grid(row=0, column=0, pady=50, padx=50)
+bottom_frame = ctk.CTkFrame(window, fg_color="#83018f") #! Purple
+bottom_frame.grid(row=3, column=0, pady=10)
+future_forecast_label = ctk.CTkLabel(bottom_frame, text="forecast", font=("Arial", 16), text_color="#00a2ff")
+future_forecast_label.grid(row=0, column=0, pady=50, padx=50)
 # future_forecast_label_1 = ctk.CTkLabel(bottom_frame, text="forecast 1", font=("Arial", 16), text_color="#00a2ff")
 # future_forecast_label_1.grid(row=0, column=0, pady=50, padx=50)
 # future_forecast_label_2 = ctk.CTkLabel(bottom_frame, text="forecast 2", font=("Arial", 16), text_color="#00a2ff")
@@ -313,19 +307,15 @@ from datetime import datetime # used to convert UNIX timestamps to datetime obje
 
 
 
-#! Conversion Functions
-# ===================================================================
-def kelvin_to_fahrenheit(kelvin_temp):
-    return round((kelvin_temp - 273.15) * 9/5 + 32, 2)
-def mps_to_mph(mps_speed):
-    return round(mps_speed * 2.237, 2)
-# ===================================================================
-
-
-# def get_weather():
+#!  def get_weather():
 # ===================================================================
 def get_weather():
-    city = 'houston'
+    def kelvin_to_fahrenheit(kelvin_temp):
+        return round((kelvin_temp - 273.15) * 9/5 + 32, 2)
+    def mps_to_mph(mps_speed):
+        return round(mps_speed * 2.237, 2)
+    
+    city = city_entry.get()
     api_key = "d01afd2806e508d282da4f840dd4696a"
     base_url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}"
 
@@ -333,8 +323,32 @@ def get_weather():
     data = json.loads(response.text)
 
     city_name = data["city"]["name"]
-    print(city_name)
+    current_data = data["list"][0]
+    current_date = current_data["dt_txt"]
+    current_description = current_data["weather"][0]["description"]
+    current_temperature = kelvin_to_fahrenheit(current_data["main"]["temp"])
+    current_humidity = current_data["main"]["humidity"]
+    current_wind = mps_to_mph(current_data["wind"]["speed"])
+
+    for i in data["list"][7::8]:
+        date = i["dt_txt"]
+        description = i["weather"][0]["description"]
+        temperature = kelvin_to_fahrenheit(i["main"]["temp"])
+        humidity = i["main"]["humidity"]
+        wind = mps_to_mph(i["wind"]["speed"])
+        print(date, description, temperature, humidity, wind)
+
+    print(city_name, current_date, current_description, current_temperature, current_humidity, current_wind)
 # ===================================================================
 
+#! Middle Frame
+# ===================================================================
+middle_frame = ctk.CTkFrame(window, fg_color="#0c87eb") #! Blue
+middle_frame.grid(row=2, column=0, pady=10)
+fetch_button = ctk.CTkButton(middle_frame, text="Get Weather", font=("Arial", 16), text_color="white", fg_color="#eb4b0c", corner_radius=15, command=get_weather)
+fetch_button.grid(row=0, column=0, pady=10, padx=10)
+reset_button = ctk.CTkButton(middle_frame, text="Reset", font=("Arial", 16), text_color="white", fg_color="#eb4b0c", corner_radius=15)
+reset_button.grid(row=1, column=0, pady=10, padx=10)
+# ===================================================================
 
-get_weather()
+window.mainloop()
